@@ -1,0 +1,17 @@
+
+
+task updateChangelog() {
+  group = 'Publishing'
+  description = "Replace `${versionPlaceholder}` in ${changelogFilename} with current date and version and add a new placeholder."
+
+  def date = new Date().format('yyyy-MM-dd')
+  doLast{
+    def versionHeader = "${versionPlaceholder}\n\n**$version** ($date):"
+      ant.replace(
+         file: changelogFilename,
+         token: versionPlaceholder,
+         value: versionHeader,
+         failOnNoReplacements: true  // Fail if token missing in changelog file.
+         )
+    }
+}
